@@ -16,7 +16,7 @@ app.use(bodyParser.urlencoded({
 }));
 
 
-app.get('/', function(req, res){
+app.get('/menu', function(req, res){
     // res.end('hello world');
     Menu.getMenu(function(err, menu){
 		if(err){
@@ -26,7 +26,25 @@ app.get('/', function(req, res){
 	});
 });
 
-app.post('/post/menu', function(req, res){
+app.get('/menu/:_id', function(req, res){
+	Menu.getMenuById(req.params._id, function(err, menu){
+		if(err){
+			throw err;
+		}
+		res.json(menu);
+	});
+});
+
+app.get('/menu/:name', function(req, res){
+	Menu.getMenuByName(req.params.name, function(err, menu){
+		if(err){
+			throw err;
+		}
+		res.json(menu);
+	});
+});
+
+app.post('/menu/add', function(req, res){
 	var menu = req.body;
 	Menu.addMenu(menu, function(err, menu){
 		if(err){
