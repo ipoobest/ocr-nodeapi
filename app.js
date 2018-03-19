@@ -26,7 +26,7 @@ app.get('/menu', function(req, res){
 	});
 });
 
-app.get('/menu/:_id', function(req, res){
+app.get('/menu/id/:_id', function(req, res){
 	Menu.getMenuById(req.params._id, function(err, menu){
 		if(err){
 			throw err;
@@ -35,8 +35,8 @@ app.get('/menu/:_id', function(req, res){
 	});
 });
 
-app.get('/menu/:name', function(req, res){
-	Menu.getMenuByName(req.params.name, function(err, menu){
+app.get('/menu/:nameThai', function(req, res){
+	Menu.getMenuByName(req.params.nameThai, function(err, menu){
 		if(err){
 			throw err;
 		}
