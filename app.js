@@ -7,7 +7,8 @@ app.use(bodyParser.json());
 
 Menu = require('./models/menu');
 
-mongoose.connect('mongodb://localhost:27017/menu');
+// mongoose.connect('mongodb://localhost:27017/menu');
+mongoose.connect('mongodb://db:27017/menu');
 
 var db = mongoose.connection;
 
@@ -54,6 +55,6 @@ app.post('/menu/add', function(req, res){
 	});
 });
 
-var server = app.listen(2222, function(req, res){
-    console.log('server start port : 2222');
+var server = app.listen(3000, function(req, res){
+    console.log('server start port : 3000');
 });
