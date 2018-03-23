@@ -2,6 +2,7 @@ var express = require('express');
 var bodyParser = require('body-parser');
 var app = express();
 var mongoose = require('mongoose');
+var stringSimilarity = require('string-similarity');
 
 app.use(bodyParser.json());
 
@@ -36,6 +37,28 @@ app.get('/menu/id/:_id', function(req, res){
 });
 
 app.get('/menu/:nameThai', function(req, res){
+	var name_max = '';
+	var max = 0;
+	Menu.getMenu(function(err, menu){
+		if(err){
+			throw err;
+		}
+		for ( i in menu ) {
+			var ratio = stringSimilarity.compareTwoStrings(req.params.nameThai, menu[i].name);
+			if (ratio == 1) {
+				name_max = menu[i].name;
+				break;
+			}
+			else if(ratio > max) {
+				name_max = menu[i].name;
+				max = ratio;
+			}
+		}
+		res.redirect('/query/' + name_max);
+	});
+});
+
+app.get('/query/:nameThai', function(req, res){
 	Menu.getMenuByName(req.params.nameThai, function(err, menu){
 		if(err){
 			throw err;
