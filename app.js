@@ -18,7 +18,6 @@ app.use(bodyParser.urlencoded({
 
 
 app.get('/menu', function(req, res){
-    // res.end('hello world');
     Menu.getMenu(function(err, menu){
 		if(err){
 			throw err;
@@ -28,7 +27,8 @@ app.get('/menu', function(req, res){
 });
 
 app.get('/menu/id/:_id', function(req, res){
-	Menu.getMenuById(req.params._id, function(err, menu){
+	var id = req.params._id;
+	Menu.getMenuById(id, function(err, menu){
 		if(err){
 			throw err;
 		}
@@ -36,7 +36,9 @@ app.get('/menu/id/:_id', function(req, res){
 	});
 });
 
+//Compare word to get menu
 app.get('/menu/:nameThai', function(req, res){
+	var nameThai = req.params.nameThai;
 	var name_max = '';
 	var max = 0;
 	Menu.getMenu(function(err, menu){
@@ -44,13 +46,13 @@ app.get('/menu/:nameThai', function(req, res){
 			throw err;
 		}
 		for ( i in menu ) {
-			var ratio = stringSimilarity.compareTwoStrings(req.params.nameThai, menu[i].name);
+			var ratio = stringSimilarity.compareTwoStrings(nameThai, menu[i].nameThai);
 			if (ratio == 1) {
-				name_max = menu[i].name;
+				name_max = menu[i].nameThai;
 				break;
 			}
 			else if(ratio > max) {
-				name_max = menu[i].name;
+				name_max = menu[i].nameThai;
 				max = ratio;
 			}
 		}
@@ -59,7 +61,8 @@ app.get('/menu/:nameThai', function(req, res){
 });
 
 app.get('/query/:nameThai', function(req, res){
-	Menu.getMenuByName(req.params.nameThai, function(err, menu){
+	var nameThai = req.params.nameThai;
+	Menu.getMenuByName(nameThai, function(err, menu){
 		if(err){
 			throw err;
 		}
@@ -78,7 +81,8 @@ app.post('/menu/add', function(req, res){
 });
 
 app.delete('/menu/delete/:nameThai', function(req, res){
-	Menu.deleteByName(req.params.nameThai, function(err, menu){
+	var nameThai = req.params.nameThai;
+	Menu.deleteByName(nameThai, function(err, menu){
 		if(err){
 			throw err;
 		}
@@ -87,8 +91,9 @@ app.delete('/menu/delete/:nameThai', function(req, res){
 });
 
 app.put('/menu/update/:nameThai', function(req, res){
+	var nameThai = req.params.nameThai;
 	var menu = req.body;
-	Menu.updateMenu(req.params.nameThai, menu, {}, function(err, menu){
+	Menu.updateMenu(nameThai, menu, {}, function(err, menu){
 		if(err){
 			throw err;
 		}
