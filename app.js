@@ -38,7 +38,7 @@ app.get('/menu/id/:_id', function(req, res){
 });
 
 //Compare word to get menu
-app.get('/menu/:nameThai', function(req, res){
+app.post('/menu/:nameThai', function(req, res){
 	var nameThai = req.params.nameThai;
 	var name_max = '';
 	var max = 0;
