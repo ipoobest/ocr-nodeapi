@@ -37,3 +37,8 @@ module.exports.getMenuByName = function(name, callback){
 module.exports.addMenu = function(menu, callback){
 	Menu.create(menu, callback);
 };
+
+module.exports.deleteByName = function(name, callback){
+	var name = {nameThai: name};
+	Menu.remove(name, callback);
+};
