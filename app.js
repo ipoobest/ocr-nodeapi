@@ -8,7 +8,7 @@ app.use(bodyParser.json());
 
 Menu = require('./models/menu');
 
-mongoose.connect('mongodb://localhost:27017/menu');
+// mongoose.connect('mongodb://localhost:27017/menu');
 mongoose.connect('mongodb://db:27017/menu');
 
 var db = mongoose.connection;
