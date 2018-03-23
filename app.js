@@ -86,6 +86,16 @@ app.delete('/menu/delete/:nameThai', function(req, res){
 	});
 });
 
+app.put('/menu/update/:nameThai', function(req, res){
+	var menu = req.body;
+	Menu.updateMenu(req.params.nameThai, menu, {}, function(err, menu){
+		if(err){
+			throw err;
+		}
+		res.json(menu);
+	});
+});
+
 var server = app.listen(2222, function(req, res){
     console.log('server start port : 2222');
 });

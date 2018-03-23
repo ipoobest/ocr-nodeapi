@@ -42,3 +42,15 @@ module.exports.deleteByName = function(name, callback){
 	var name = {nameThai: name};
 	Menu.remove(name, callback);
 };
+
+module.exports.updateMenu = function(name, menu, options, callback){
+	var name = {nameThai: name};
+	var update = {
+		name: menu.name,
+		nameThai: menu.nameThai,
+		description: menu.description,
+        ingredient: menu.ingredient,
+        imgUrl: menu.imgUrl	
+	}
+    Menu.findOneAndUpdate(name, update, options, callback);
+}
