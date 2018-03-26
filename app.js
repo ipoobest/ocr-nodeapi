@@ -91,6 +91,18 @@ app.delete('/menu/delete/:nameThai', function(req, res){
 	});
 });
 
+
+//delete menu by id
+app.delete('/menu/delete/:_id', function(req, res){
+	var nameThai = req.params._id;
+	Menu.deleteByName(_id, function(err, menu){
+		if(err){
+			throw err;
+		}
+		res.json(menu);
+	});
+});
+
 app.put('/menu/update/:nameThai', function(req, res){
 	var nameThai = req.params.nameThai;
 	var menu = req.body;
