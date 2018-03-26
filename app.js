@@ -94,7 +94,7 @@ app.delete('/menu/delete/:nameThai', function(req, res){
 
 //delete menu by id
 app.delete('/menu/delete/:_id', function(req, res){
-	var nameThai = req.params._id;
+	var _id = req.params._id;
 	Menu.deleteByName(_id, function(err, menu){
 		if(err){
 			throw err;
