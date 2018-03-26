@@ -71,6 +71,44 @@ app.get('/query/:nameThai', function(req, res){
 	});
 });
 
+//Compare word to get menues
+app.get('/menu/querymenu/:nameThai', function(req, res){
+	var nameThaiArry = req.params.nameThai.split('\n');
+	var name_max_arry = [];
+	Menu.getMenu(function(err, menu){
+		if(err){
+			throw err;
+		}
+		nameThaiArry.forEach(function(nameThai) {
+			var name_max = '';
+			var max = 0;
+			for ( i in menu ) {
+				var ratio = stringSimilarity.compareTwoStrings(nameThai, menu[i].nameThai);
+				if (ratio == 1) {
+					name_max = menu[i].nameThai;
+					break;
+				}
+				if(ratio > max) {
+					name_max = menu[i].nameThai;
+					max = ratio;
+				}
+			}
+			name_max_arry.push(name_max);
+		});
+		res.redirect('/querymenu/' + name_max_arry);
+	});
+});
+
+app.get('/querymenu/:nameThai', function(req, res){
+	var nameThai = req.params.nameThai;
+	Menu.getMenuesByName(nameThai, function(err, menu){
+		if(err){
+			throw err;
+		}
+		res.json(menu);
+	});
+});
+
 app.post('/menu/add', function(req, res){
 	var menu = req.body;
 	Menu.addMenu(menu, function(err, menu){

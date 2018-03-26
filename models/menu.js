@@ -37,19 +37,25 @@ module.exports.getMenuByName = function(name, callback){
     Menu.findOne(name, callback);
 };
 
+//Get menus (by nameThai)
+module.exports.getMenuesByName = function(name, callback){
+    var nameArry = name.split(',');
+    var name = {nameThai: nameArry};
+    Menu.find(name,callback);
+};
+
 //Add menu
 module.exports.addMenu = function(menu, callback){
 	Menu.create(menu, callback);
 };
 
-//Delete menu (by nameThai)
-//TODO: Delete menu (by id)
-
+//Delete menu (by id)
 module.exports.deleteById = function(id, callback){
 	var id = {_id: id};
 	Menu.remove(id, callback);
 };
 
+//Delete menu (by nameThai)
 module.exports.deleteByName = function(name, callback){
 	var name = {nameThai: name};
 	Menu.remove(name, callback);
