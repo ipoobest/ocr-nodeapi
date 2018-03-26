@@ -29,13 +29,13 @@ module.exports.getMenu = function(callback, limit){
 //Get menu (by id)
 module.exports.getMenuById = function(id, callback){
 	Menu.findById(id, callback);
-}
+};
 
 //Get menu (by nameThai)
 module.exports.getMenuByName = function(name, callback){
     var name = {nameThai: name};
     Menu.findOne(name, callback);
-}
+};
 
 //Add menu
 module.exports.addMenu = function(menu, callback){
@@ -43,6 +43,13 @@ module.exports.addMenu = function(menu, callback){
 };
 
 //Delete menu (by nameThai)
+//TODO: Delete menu (by id)
+
+module.exports.deleteById = function(id, callback){
+	var name = {_id: id};
+	Menu.remove(id, callback);
+};
+
 module.exports.deleteByName = function(name, callback){
 	var name = {nameThai: name};
 	Menu.remove(name, callback);
@@ -57,6 +64,6 @@ module.exports.updateMenu = function(name, menu, options, callback){
 		description: menu.description,
         ingredient: menu.ingredient,
         imgUrl: menu.imgUrl	
-	}
+	};
     Menu.findOneAndUpdate(name, update, options, callback);
-}
+};
