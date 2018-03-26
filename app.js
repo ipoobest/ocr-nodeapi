@@ -8,8 +8,8 @@ app.use(bodyParser.json());
 
 Menu = require('./models/menu');
 
-// mongoose.connect('mongodb://localhost:27017/menu');
-mongoose.connect('mongodb://db:27017/menu');
+mongoose.connect('mongodb://localhost:27017/menu');
+// mongoose.connect('mongodb://db:27017/menu');
 
 var db = mongoose.connection;
 
@@ -91,11 +91,10 @@ app.delete('/menu/delete/:nameThai', function(req, res){
 	});
 });
 
-
 //delete menu by id
-app.delete('/menu/delete/:_id', function(req, res){
+app.delete('/menu/delete/id/:_id', function(req, res){
 	var _id = req.params._id;
-	Menu.deleteByName(_id, function(err, menu){
+	Menu.deleteById(_id, function(err, menu){
 		if(err){
 			throw err;
 		}

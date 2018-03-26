@@ -46,7 +46,7 @@ module.exports.addMenu = function(menu, callback){
 //TODO: Delete menu (by id)
 
 module.exports.deleteById = function(id, callback){
-	var name = {_id: id};
+	var id = {_id: id};
 	Menu.remove(id, callback);
 };
 
