@@ -83,6 +83,9 @@ app.get('/menu/querymenu/:nameThai', function(req, res){
 			var name_max = '';
 			var max = 0;
 			for ( i in menu ) {
+				if (!menu[i].nameThai) {
+					continue;
+				}
 				var ratio = stringSimilarity.compareTwoStrings(nameThai, menu[i].nameThai);
 				if (ratio == 1) {
 					name_max = menu[i].nameThai;
