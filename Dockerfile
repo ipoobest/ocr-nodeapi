@@ -4,7 +4,7 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM node
+FROM node:8.10.0
 
 # File Author / Maintainer
 LABEL "com.example.vendor"="LNU"
