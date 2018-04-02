@@ -17,6 +17,15 @@ var menuSchema = mongoose.Schema({
     "imgUrl":{
         type:String
     },
+    "review":[{
+        user: String,
+        rate: Number,
+        comment: String,
+        date: {
+            type: Date,
+            default: Date.now
+        }
+    }],
 });
 
 var Menu = module.exports = mongoose.model('menu', menuSchema);

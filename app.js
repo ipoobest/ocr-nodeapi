@@ -8,8 +8,8 @@ app.use(bodyParser.json());
 
 Menu = require('./models/menu');
 
-// mongoose.connect('mongodb://localhost:27017/menu');
-mongoose.connect('mongodb://db:27017/menu');
+mongoose.connect('mongodb://localhost:27017/menu');
+// mongoose.connect('mongodb://db:27017/menu');
 
 var db = mongoose.connection;
 
@@ -152,6 +152,21 @@ app.put('/menu/update/:nameThai', function(req, res){
 		}
 		res.json(menu);
 	});
+});
+
+app.put('/menu/review/:nameThai', function(req, res){
+	var nameThai = req.params.nameThai;
+	var rv = req.body;
+	Menu.update(
+		{ nameThai: nameThai },
+		{ $push: { review: { user: rv.user, rate: rv.rate, comment:rv.comment } } },
+		function(err){
+            if(err){
+                res.send(err);
+            }else{
+                res.send("success!");
+            }
+		});
 });
 
 var server = app.listen(3000, function(req, res){
