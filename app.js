@@ -143,16 +143,6 @@ app.delete('/menu/delete/id/:_id', function(req, res){
 	});
 });
 
-app.delete('/menu/review/delete/:_id', function(req, res){
-	var _id = req.params._id;
-	Menu.deleteReviewById(_id, function(err, menu){
-		if(err){
-			throw err;
-		}
-		res.json(menu);
-	});
-});
-
 app.put('/menu/update/:nameThai', function(req, res){
 	var nameThai = req.params.nameThai;
 	var menu = req.body;
