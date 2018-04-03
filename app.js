@@ -143,6 +143,16 @@ app.delete('/menu/delete/id/:_id', function(req, res){
 	});
 });
 
+app.delete('/menu/review/delete/:_id', function(req, res){
+	var _id = req.params._id;
+	Menu.deleteReviewById(_id, function(err, menu){
+		if(err){
+			throw err;
+		}
+		res.json(menu);
+	});
+});
+
 app.put('/menu/update/:nameThai', function(req, res){
 	var nameThai = req.params.nameThai;
 	var menu = req.body;
@@ -154,18 +164,45 @@ app.put('/menu/update/:nameThai', function(req, res){
 	});
 });
 
-app.put('/menu/review/:nameThai', function(req, res){
+app.put('/review/add/:nameThai', function(req, res){
 	var nameThai = req.params.nameThai;
 	var rv = req.body;
 	Menu.update(
 		{ nameThai: nameThai },
 		{ $push: { review: { user: rv.user, rate: rv.rate, comment:rv.comment } } },
-		function(err){
+		function(err, menu){
             if(err){
-                res.send(err);
-            }else{
-                res.send("success!");
-            }
+                throw err;
+			}
+			res.json(menu);
+		});
+});
+
+app.put('/review/delete/:nameThai', function(req, res){
+	var nameThai = req.params.nameThai;
+	var rv = req.body;
+	Menu.update(
+		{ nameThai: nameThai },
+		{ $pull: { review: { _id: rv._id } } },
+		function(err, menu){
+            if(err){
+                throw err;
+			}
+			res.json(menu);
+		});
+});
+
+app.put('/review/update/:nameThai', function(req, res){
+	var nameThai = req.params.nameThai;
+	var rv = req.body;
+	Menu.update(
+		{ nameThai: nameThai, 'review._id': rv._id },
+		{ $set: { 'review.$.user': rv.user, 'review.$.rate': rv.rate, 'review.$.comment':rv.comment } },
+		function(err, menu){
+            if(err){
+                throw err;
+			}
+			res.json(menu);
 		});
 });
 
