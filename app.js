@@ -27,6 +27,17 @@ app.get('/menu', function(req, res){
 	});
 });
 
+app.get('/menu/:limit', function(req, res){
+	var limit = req.params.limit;
+	limit = parseInt(limit);
+    Menu.find().limit(limit).exec(function(err, menu) {
+		if(err){
+			throw err;
+		}
+		res.json(menu);
+	  });
+});
+
 app.get('/menu/id/:_id', function(req, res){
 	var id = req.params._id;
 	Menu.getMenuById(id, function(err, menu){
