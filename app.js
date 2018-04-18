@@ -8,8 +8,8 @@ app.use(bodyParser.json());
 
 Menu = require('./models/menu');
 
-mongoose.connect('mongodb://localhost:27017/menu');
-// mongoose.connect('mongodb://db:27017/menu');
+// mongoose.connect('mongodb://localhost:27017/menu');
+mongoose.connect('mongodb://db:27017/menu');
 
 var db = mongoose.connection;
 
@@ -175,7 +175,7 @@ app.put('/review/add/:nameThai', function(req, res){
             if(err){
                 throw err;
 			}
-			res.json(menu);
+			res.redirect(303, '/review/rating/' + nameThai);
 		});
 });
 
@@ -189,7 +189,7 @@ app.put('/review/delete/:nameThai', function(req, res){
             if(err){
                 throw err;
 			}
-			res.json(menu);
+			res.redirect(303, '/review/rating/' + nameThai);
 		});
 });
 
@@ -213,8 +213,43 @@ app.put('/review/update/:nameThai', function(req, res){
             if(err){
                 throw err;
 			}
-			res.json(menu);
+			res.redirect(303, '/review/rating/' + nameThai);
 		});
+});
+
+app.get('/review/rating/:nameThai', function(req, res){
+	var nameThai = req.params.nameThai;
+	Menu.getMenuByName(nameThai, function(err, menu){
+		if(err){
+			throw err;
+		}
+		var rate_sum = 0;
+		var quantity = 0;
+		for (var i = 0; i < menu.review.length; i++) {
+			if(menu.review[i].rate){
+				rate_sum += menu.review[i].rate;
+				quantity++;
+			}
+		}
+		var rate_avg = rate_sum/quantity;
+		res.redirect('/review/update-rating/' + nameThai + '/' + rate_avg + '/' + quantity );
+	});
+});
+
+app.get('/review/update-rating/:nameThai/:rating/:quantity', function(req, res){
+	var nameThai = req.params.nameThai;
+	var rating = req.params.rating;
+	var quantity = req.params.quantity;
+	var menu = {
+		rating: rating,
+		quantity: quantity
+	}
+	Menu.updateMenu(nameThai, menu, {}, function(err, menu){
+		if(err){
+			throw err;
+		}
+		res.json(menu);
+	});
 });
 
 var server = app.listen(3000, function(req, res){

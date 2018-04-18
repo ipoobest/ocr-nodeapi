@@ -8,6 +8,9 @@ var menuSchema = mongoose.Schema({
     "nameThai":{
         type:String
     },
+    "type":{
+        type:String
+    },
     "description":{
         type:String
     },
@@ -16,6 +19,12 @@ var menuSchema = mongoose.Schema({
     },
     "imgUrl":{
         type:String
+    },
+    "rating":{
+        type:Number
+    },
+    "quantity":{
+        type:Number
     },
     "review":[{
         user: String,
@@ -80,6 +89,9 @@ module.exports.updateMenu = function(name, menu, options, callback){
     if(menu.nameThai) {
         update['nameThai'] = menu.nameThai;
     }
+    if(menu.type) {
+        update['type'] = menu.type;
+    }
     if(menu.description) {
         update['description'] = menu.description;
     }
@@ -88,6 +100,12 @@ module.exports.updateMenu = function(name, menu, options, callback){
     }
     if(menu.imgUrl) {
         update['imgUrl'] = menu.imgUrl;
+    }
+    if(menu.rating) {
+        update['rating'] = menu.rating;
+    }
+    if(menu.quantity) {
+        update['quantity'] = menu.quantity;
     }
     Menu.findOneAndUpdate(name, update, options, callback);
 };
