@@ -72,13 +72,22 @@ module.exports.deleteByName = function(name, callback){
 
 //Update menu (by nameThai)
 module.exports.updateMenu = function(name, menu, options, callback){
-	var name = {nameThai: name};
-	var update = {
-		name: menu.name,
-		nameThai: menu.nameThai,
-		description: menu.description,
-        ingredient: menu.ingredient,
-        imgUrl: menu.imgUrl	
-	};
+    var update = {};
+    var name = {nameThai: name};
+    if(menu.name) {
+        update['name'] = menu.name;
+    }
+    if(menu.nameThai) {
+        update['nameThai'] = menu.nameThai;
+    }
+    if(menu.description) {
+        update['description'] = menu.description;
+    }
+    if(menu.ingredient) {
+        update['ingredient'] = menu.ingredient;
+    }
+    if(menu.imgUrl) {
+        update['imgUrl'] = menu.imgUrl;
+    }
     Menu.findOneAndUpdate(name, update, options, callback);
 };

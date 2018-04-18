@@ -194,11 +194,21 @@ app.put('/review/delete/:nameThai', function(req, res){
 });
 
 app.put('/review/update/:nameThai', function(req, res){
+	var update = {};
 	var nameThai = req.params.nameThai;
 	var rv = req.body;
+	if(rv.user) {
+		update['review.$.user'] = rv.user;
+	} 
+	if(rv.rate) {
+		update['review.$.rate'] = rv.rate;
+	}
+	if(rv.comment) {
+		update['review.$.comment'] = rv.comment;
+	}
 	Menu.update(
 		{ nameThai: nameThai, 'review._id': rv._id },
-		{ $set: { 'review.$.user': rv.user, 'review.$.rate': rv.rate, 'review.$.comment':rv.comment } },
+		{ $set: update },
 		function(err, menu){
             if(err){
                 throw err;
