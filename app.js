@@ -38,6 +38,18 @@ app.get('/menu/:limit', function(req, res){
 	  });
 });
 
+app.get('/menu/sort/:sort/:limit', function(req, res){
+	var limit = req.params.limit;
+	var sort = req.params.sort;
+	limit = parseInt(limit);
+    Menu.find().sort('-'+sort).limit(limit).exec(function(err, menu) {
+		if(err){
+			throw err;
+		}
+		res.json(menu);
+	  });
+});
+
 app.get('/menu/id/:_id', function(req, res){
 	var id = req.params._id;
 	Menu.getMenuById(id, function(err, menu){
