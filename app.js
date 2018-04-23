@@ -8,8 +8,8 @@ app.use(bodyParser.json());
 
 Menu = require('./models/menu');
 
-// mongoose.connect('mongodb://localhost:27017/menu');
-mongoose.connect('mongodb://db:27017/menu');
+mongoose.connect('mongodb://localhost:27017/menu');
+// mongoose.connect('mongodb://db:27017/menu');
 
 var db = mongoose.connection;
 
@@ -48,6 +48,30 @@ app.get('/menu/sort/:sort/:limit', function(req, res){
 		}
 		res.json(menu);
 	  });
+});
+
+app.get('/menu/filer-sort/:filter/:sort/:limit', function(req, res){
+	var filter = req.params.filter;
+	var limit = req.params.limit;
+	var sort = req.params.sort;
+	limit = parseInt(limit);
+	if(filter == 'all') {
+		Menu.find().sort('-'+sort).limit(limit).exec(function(err, menu) {
+			if(err){
+				throw err;
+			}
+			res.json(menu);
+		  });
+	}
+	else {
+		var query = { type: filter };
+		Menu.find(query).sort('-'+sort).limit(limit).exec(function(err, menu) {
+			if(err){
+				throw err;
+			}
+			res.json(menu);
+		  });
+	}
 });
 
 app.get('/menu/id/:_id', function(req, res){
