@@ -6,11 +6,10 @@ services:
     depends_on:
       - db
     ports:
-      - "3000:3000"
+      - "8888:8888"
     volumes:
-      - .:/opt/app
-      - /opt/app/node_modules
-      # Needed to sync hosts working directory during development.
+      - .:/usr/src/app
+      - /usr/src/app/node_modules
   db:
     image: mongo
     expose:

@@ -4,19 +4,18 @@
 ############################################################
 
 # Set the base image to Ubuntu
-FROM node:8.10.0
+FROM node:alpine
 
 # File Author / Maintainer
-LABEL "com.example.vendor"="LNU"
 LABEL version="1.0"
 LABEL maintainer="poobest.pooh@gmail.com"
 
 
 # Since it is just dev we create this with std user
-RUN mkdir -p /opt/app
+RUN mkdir -p /usr/src/app
 
 # Start with a WORKDIR
-WORKDIR /opt/app
+WORKDIR usr/src/app
 
 # First take the package.json and install all the modules
 COPY package.json .
@@ -28,8 +27,8 @@ RUN npm install nodemon -g --quiet
 # Copy the app
 COPY . .
 
-# expose port 3000
-EXPOSE 3000
+# expose port 8888
+EXPOSE 8888
 
 # Start the application when starting the container
 CMD nodemon -L --watch . app.js
